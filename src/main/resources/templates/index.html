@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<script type="text/javascript"
+	src="https://cdn.staticfile.org/jquery/2.0.3/jquery.min.js"></script>
+<head>
+<meta charset="UTF-8" />
+<title>CodeRobot</title>
+<style type="text/css">
+p {
+	color: red;
+}
+
+.head {
+	background-color: #ded3d3;
+	width: 1000px;
+	height: 20px;
+	margin: 0 auto;
+}
+
+.sep {
+	height: 2px;
+}
+
+.databaseinfo {
+	background-color: #ded3d3;
+	width: 1000px;
+	height: 30px;
+	margin: 0 auto;
+}
+.tablesDiv {
+	background-color: #ded3d3;
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.vercontent {
+	top: 5px;
+	display: float;
+}
+
+ol, ul {
+	width: 350px;
+	display: inline-block;
+	text-align: left;
+	vertical-align: top;
+	background: rgba(0, 0, 0, 0.2);
+	color: rgba(255, 255, 255, 0.5);
+	border-radius: 5px;
+	padding: 1.5em;
+	margin: 2%;
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+.live {
+  overflow: hidden;
+}
+.live > li {
+  list-style: none;
+  position: relative;
+  padding: 0 0 0 2em;
+  margin: 0 0 .5em 10px;
+  -webkit-transition: .12s;
+          transition: .12s;
+}
+.live > li::before {
+  position: absolute;
+  content: '\2022';
+  font-family: Arial;
+  color: #FFF;
+  top: 0;
+  left: 0;
+  text-align: center;
+  font-size: 2em;
+  opacity: .5;
+  line-height: .75;
+  -webkit-transition: .5s;
+          transition: .5s;
+}
+.live > li:hover {
+  color: #FFF;
+}
+.live > li:hover::before {
+  -webkit-transform: scale(2);
+      -ms-transform: scale(2);
+          transform: scale(2);
+  opacity: 1;
+  text-shadow: 0 0 4px;
+  -webkit-transition: .1s;
+          transition: .1s;
+}
+textarea {
+	width: 500px;
+	height: 200px;
+	margin-top: 20px;
+	background-color: #ded3d3;
+}
+</style>
+</head>
+<body>
+	<script type="text/javascript">
+		function connect() {
+			var urlStr = window.btoa($("#url").val());
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8040/cloudmemory/connection/connect",
+				data : {
+					url : urlStr,
+					userName : $("#userName").val(),
+					password : $("#password").val()
+				},
+				dataType : "json",
+				success : function(data) {
+					showData(data);
+				}
+			});
+		}
+		
+		function getBaseSql(tableName) {
+			$.ajax({
+				type : "GET",
+				url : "http://localhost:8040/cloudmemory/connection/getBaseSql",
+				data : {
+					tableName : tableName,
+				},
+				dataType : "json",
+				success : function(data) {
+					$("#result").text(data.selectSql);
+				}
+			});
+		}
+
+		function showData(data) {
+			$("#tablesUl > li").remove();
+			for (i = 0; i < data.length; i++) {
+				$("#tablesUl").append(
+						" <li value=" + data[i].tableName + " " + "onclick=" + "'getBaseSql(" + "\"" + data[i].tableName + "\"" + ")'" + ">"
+								+ data[i].tableName + "</li>");
+			}
+		}
+	</script>
+	<div class="head"></div>
+	<div class="sep"></div>
+	<div class="databaseinfo">
+		<div class="vercontent">
+			数据库连接地址: <input type="text"
+				value="jdbc:mysql://192.168.0.115:3306/rtfrontier" id="url" />
+			数据库账户: <input type="text" value="root" id="userName" /> 数据库密码: <input
+				type="text" value="123456" id="password" /> <input type="button"
+				value="连接" onclick="connect()" />
+		</div>
+	</div>
+	<div class="sep"></div>
+	<div class="tablesDiv">
+		<ul id="tablesUl" class="live">
+	
+		</ul>
+		<span id="tablesUl" class="live">
+		<textarea rows="" id="result" cols=""></textarea>
+		
+		</span>
+	</div>
+	<p id="databaseinfo"></p>
+</body>
+</html>

@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: cloudmemory
+  thymeleaf:
+    prefix: classpath:/templates/
+    cache: false
+    encoding: UTF-8
+    content-type: text/html
+    mode: LEGACYHTML5
+  profiles:
+    active: dev
