@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.htl.cloudmemory.core.validate.ValidateUtils;
+
 @Aspect
 @Component
 @Order(1)
@@ -33,6 +35,13 @@ public class TokenCheckAspect {
 
 		try {
 			if (result == null) {
+				
+				//进行参数校验
+				Object validateR = null;
+				if((validateR = ValidateUtils.validate(pjp)) != null){
+					return validateR;
+				}
+				
 				// 如果是已知异常,则直接向前端返回
 				try {
 					result = pjp.proceed();
