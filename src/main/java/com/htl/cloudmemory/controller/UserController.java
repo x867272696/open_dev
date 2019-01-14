@@ -8,10 +8,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.codingapi.tx.annotation.TxTransaction;
+import com.htl.cloudmemory.core.apigroup.APIGroup_api_1_0;
 import com.htl.cloudmemory.entity.GUser;
 import com.htl.cloudmemory.service.IUserService;
 import com.htl.cloudmemory.util.PageDetail;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value = "用户管理相关接口", description = "用户管理相关接口")
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -21,6 +28,11 @@ public class UserController {
 	@Autowired
 	private IUserService userService;
 	
+	@APIGroup_api_1_0
+	@ApiOperation(value = "新增一个用户")
+	@ApiImplicitParams({ @ApiImplicitParam(name = "name", paramType = "query", value = "用户名字", dataType = "String"),
+		@ApiImplicitParam(name = "age", paramType = "query", value = "用户年龄", dataType = "int")
+	})
 	@GetMapping("/save")
 	public String saveUser(String name, Integer age){
 		logger.info("执行新增操作.");

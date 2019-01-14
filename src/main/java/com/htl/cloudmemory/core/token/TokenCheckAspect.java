@@ -22,7 +22,7 @@ public class TokenCheckAspect {
 	 * @return JsonResult（被拦截方法的执行结果，或需要登录的错误提示。）
 	 * @throws Throwable
 	 */
-	@Around("execution(* com.linkingmed.rtfrontier.controller..*.*(..))")
+	@Around("execution(* com.htl.cloudmemory.controller..*.*(..))")
 	public Object Interceptor(ProceedingJoinPoint pjp) throws Throwable {
 
 		logger.info("{}", "-----------------the token check  start...");
