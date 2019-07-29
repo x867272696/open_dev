@@ -7,10 +7,6 @@ spring:
     username: root
     password: 112885
     driver-class-name: com.mysql.jdbc.Driver
-  redis:
-    host: 192.168.153.129
-    port: 6379
-    password: 112885
 
 eureka:
   client:

@@ -9,9 +9,5 @@ spring:
     mode: LEGACYHTML5
   profiles:
     active: dev
-eureka:
-  client:
-    healthcheck:
-      enabled: true
 logging:
   config: classpath:logback/logback-spring.xml
