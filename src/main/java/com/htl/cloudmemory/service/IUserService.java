@@ -8,5 +8,7 @@ public interface IUserService {
 	void save(GUser user);
 
 	PageDetail findByName(String name, Integer pageNum, Integer pageSize);
+
+	String test();
 	
 }

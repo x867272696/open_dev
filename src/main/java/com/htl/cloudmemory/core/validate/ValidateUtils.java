@@ -23,10 +23,11 @@ import org.springframework.validation.ObjectError;
 public class ValidateUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(ValidateUtils.class);
+    private final static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    private final static ExecutableValidator validator = factory.getValidator().forExecutables();
 
-	public static Object validate(ProceedingJoinPoint pjp) {
+	public static String validate(ProceedingJoinPoint pjp) {
 		try {
-			logger.info("run validate logic, controller:" + pjp.getArgs());
 			Object[] parameters = pjp.getArgs();
 			if (parameters != null && parameters.length > 0) {
 				Integer index = 0;
@@ -68,9 +69,6 @@ public class ValidateUtils {
 		}
 		return null;
 	}
-
-    private final static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    private final static ExecutableValidator validator = factory.getValidator().forExecutables();
 
 
     private static <T> Set<ConstraintViolation<T>> validMethodParams(T obj, Method method, Object[] params) {
